@@ -1,0 +1,10 @@
+{
+  "type": "mongodb",
+  "host": "localhost",
+  "port": 27017,
+  "username": "mongodb",
+  "password": "mongodb",
+  "database": "mongodb",
+  "entities": ["src/**/*.entity{.ts,.js}"],
+  "synchronize": true
+}
