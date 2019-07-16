@@ -9,6 +9,6 @@ export class ClassicController {
 
   @Get('/latest')
   async latest() {
-    return await this.classicService.latest()
+    return await this.classicService.latest(1)
   }
 }

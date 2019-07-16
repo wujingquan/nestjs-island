@@ -6,6 +6,7 @@ import { Movie } from 'src/entities/movie.entity';
 import { Music } from 'src/entities/music.entity';
 import { Sentence } from 'src/entities/sentence.entity';
 import { Book } from 'src/entities/book.entity';
+import { Favor } from 'src/entities/favor.entity';
 
 
 @Injectable()
@@ -25,9 +26,12 @@ export class ClassicService {
 
     @InjectRepository(Book)
     private readonly bookRepository: Repository<Book>,
+
+    @InjectRepository(Favor)
+    private readonly favorRepository: Repository<Favor>,
   ) { }
 
-  async latest() {
+  async latest(uid) {
     let art = null
 
     const flow = await this.flowRepository.findOne()
@@ -41,20 +45,33 @@ export class ClassicService {
 
     switch (flow.type) {
       case 100:
-        this.movieRepository.findOne(finder)
+        art = await this.movieRepository.findOne(finder)
         break;
       case 200:
-        this.musicRepository.findOne(finder)
+        art = await this.musicRepository.findOne(finder)
         break;
       case 300:
-        this.sentenceRepository.findOne(finder)
+        art = await this.sentenceRepository.findOne(finder)
         break;
       case 400:
-        this.bookRepository.findOne(finder)
+        art = await this.bookRepository.findOne(finder)
         break;
       default:
         break;
     }
+
+    const favor = await this.favorRepository.findOne({
+      where: {
+        art_id: flow.art_id,
+        type: flow.type,
+        uid
+      }
+    })
+
+    Object.assign(art, {
+      index: flow.index,
+      like_status: favor ? 1 : 0
+    })
 
     return art
   }
