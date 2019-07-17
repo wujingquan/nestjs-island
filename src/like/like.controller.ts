@@ -9,14 +9,15 @@ export class LikeController {
 
   }
 
+  // 点赞
   @Post()
   async like() {
-    return await this.likeService.like()
+    return await this.likeService.like(1, 100, 1)
   }
 
+  // 取消点赞
   @Post('/cancel')
   async cancel() {
-    return await this.likeService.cancel()
+    return await this.likeService.cancel(1, 100, 1)
   }
-
 }
