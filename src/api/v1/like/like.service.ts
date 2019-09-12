@@ -9,19 +9,20 @@ export class LikeService {
     @InjectRepository(Favor)
     private readonly favorRepository: Repository<Favor>,
   ) {}
-  
+
   async like(art_id, type, uid) {
     const favor = await this.favorRepository.findOne({
       where: {
         art_id,
         type,
-        uid
-      }
-    })
+        uid,
+      },
+    });
 
-    if (favor) {}
-    
-    return `like`
+    if (favor) {
+    }
+
+    return `like`;
   }
 
   async cancel(art_id, type, uid) {
@@ -29,12 +30,13 @@ export class LikeService {
       where: {
         art_id,
         type,
-        uid
-      }
-    })
+        uid,
+      },
+    });
 
-    if (!favor) {}
+    if (!favor) {
+    }
 
-    return `cancel`
+    return `cancel`;
   }
 }

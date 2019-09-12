@@ -1,14 +1,33 @@
-import { Controller, Get, UnauthorizedException, Post } from '@nestjs/common';
-import { AppService } from './app.service';
-import { AuthService } from './auth/auth.service';
+import {
+  Controller,
+  Get,
+  Request,
+  UnauthorizedException,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
+// import { AppService } from './app.service';
+import { AuthGuard } from '@nestjs/passport';
+// import { TokenService } from './api/v1/token/token.service';
 
-@Controller()
+@Controller('api')
 export class AppController {
-  constructor(private readonly appService: AppService, private readonly authService: AuthService) {}
-  // constructor(private readonly authService: AuthService) {}
-  
+  constructor() // private readonly tokenService: TokenService
+  {}
+  @UseGuards(AuthGuard('local'))
   @Post('login')
-  async login() {
-    return this.authService.login();
+  async login(@Request() req) {
+    console.log('req', req.user);
+    // return req.user
+    // return this.authService.login(req.user);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('me')
+  async getProfile(@Request() req) {
+    console.log('jwt req', req.user);
+    // return req.user
+    // return this.authService.login(req.user);
+    return req.user;
   }
 }

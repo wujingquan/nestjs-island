@@ -8,7 +8,6 @@ import { Sentence } from 'src/entities/sentence.entity';
 import { Book } from 'src/entities/book.entity';
 import { Favor } from 'src/entities/favor.entity';
 
-
 @Injectable()
 export class ClassicService {
   constructor(
@@ -29,32 +28,32 @@ export class ClassicService {
 
     @InjectRepository(Favor)
     private readonly favorRepository: Repository<Favor>,
-  ) { }
+  ) {}
 
   async latest(uid) {
-    let art = null
+    let art = null;
 
-    const flow = await this.flowRepository.findOne()
-    console.log('flow', flow)
+    const flow = await this.flowRepository.findOne();
+    console.log('flow', flow);
 
     const finder = {
       where: {
-        id: flow.art_id
-      }
-    }
+        id: flow.art_id,
+      },
+    };
 
     switch (flow.type) {
       case 100:
-        art = await this.movieRepository.findOne(finder)
+        art = await this.movieRepository.findOne(finder);
         break;
       case 200:
-        art = await this.musicRepository.findOne(finder)
+        art = await this.musicRepository.findOne(finder);
         break;
       case 300:
-        art = await this.sentenceRepository.findOne(finder)
+        art = await this.sentenceRepository.findOne(finder);
         break;
       case 400:
-        art = await this.bookRepository.findOne(finder)
+        art = await this.bookRepository.findOne(finder);
         break;
       default:
         break;
@@ -64,15 +63,15 @@ export class ClassicService {
       where: {
         art_id: flow.art_id,
         type: flow.type,
-        uid
-      }
-    })
+        uid,
+      },
+    });
 
     Object.assign(art, {
       index: flow.index,
-      like_status: favor ? 1 : 0
-    })
+      like_status: favor ? 1 : 0,
+    });
 
-    return art
+    return art;
   }
 }

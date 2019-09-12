@@ -7,6 +7,6 @@ import { Favor } from 'src/entities/favor.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([Favor])],
   controllers: [LikeController],
-  providers: [LikeService]
+  providers: [LikeService],
 })
 export class LikeModule {}

@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Favor {
@@ -7,7 +7,7 @@ export class Favor {
 
   @Column()
   uid: number;
-  
+
   @Column()
   art_id: number;
 

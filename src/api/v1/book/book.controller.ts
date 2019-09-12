@@ -3,17 +3,13 @@ import { Controller, Get } from '@nestjs/common';
 @Controller('book')
 export class BookController {
   @Get('/detai/:isbn')
-  findOne () {
-    
-  }
+  findOne() {}
 
   @Get('/favor/:book_id')
-  findOneFavor () {
-    
-  }
+  findOneFavor() {}
 
   @Get('/favor_count')
-  favorCount () {
-    return 10
+  favorCount() {
+    return 10;
   }
 }

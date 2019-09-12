@@ -10,8 +10,10 @@ import { Book } from 'src/entities/book.entity';
 import { Favor } from 'src/entities/favor.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Flow, Movie, Music, Sentence, Book, Favor])],
+  imports: [
+    TypeOrmModule.forFeature([Flow, Movie, Music, Sentence, Book, Favor]),
+  ],
   controllers: [ClassicController],
-  providers: [ClassicService]
+  providers: [ClassicService],
 })
-export class ClassicModule { }
+export class ClassicModule {}
