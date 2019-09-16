@@ -19,11 +19,10 @@ import { WechatService } from '../wechat/wechat.service';
 @Injectable()
 export class TokenService {
   constructor(
-    private readonly jwtService:JwtService,
+    private readonly jwtService: JwtService,
     private readonly userService: UserService,
-    private readonly wechatService: WechatService
-  ) // 
-  {}
+    private readonly wechatService: WechatService, //
+  ) {}
 
   async validateUser(username: string, pass: string): Promise<any> {
     // const user = await this.userService.findOne(username);
@@ -40,9 +39,9 @@ export class TokenService {
     if (user) {
       const payload = {
         uid: user.uid,
-        scope: 8
-      }
-      return this.jwtService.sign(payload)
+        scope: 8,
+      };
+      return this.jwtService.sign(payload);
     }
   }
 }

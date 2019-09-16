@@ -26,4 +26,4 @@ import { WechatModule } from '../wechat/wechat.module';
   controllers: [TokenController],
   exports: [TokenService],
 })
-export class TokenModule { }
+export class TokenModule {}

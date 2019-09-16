@@ -5,7 +5,7 @@ import {
   UseGuards,
   UsePipes,
   ValidationPipe,
-  Request
+  Request,
 } from '@nestjs/common';
 import { TokenDto } from './token.dto';
 import { loginEnum } from './token.enum';
@@ -19,11 +19,11 @@ export class TokenController {
   constructor(
     readonly tokenService: TokenService,
     private readonly jwtService: JwtService,
-  ) { }
+  ) {}
 
   @Post()
   async getToken(@Body() dto: TokenDto) {
-    console.log('debug 1')
+    console.log('debug 1');
     let token;
     switch (dto.type) {
       case loginEnum.USER_MINI_PROGRAM:
@@ -32,14 +32,13 @@ export class TokenController {
       default:
         break;
     }
-    return { token }
+    return { token };
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Post('verify')
   async verify(@Request() req) {
     // console.log(req)
-
   }
 
   @Post('login')
@@ -48,6 +47,6 @@ export class TokenController {
     console.log('token controller payload', payload);
     return {
       access_token: this.jwtService.sign(payload),
-    }
+    };
   }
 }

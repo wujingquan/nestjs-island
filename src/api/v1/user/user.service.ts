@@ -30,9 +30,9 @@ export class UserService {
     return this.users.find(user => user.username === username);
   }
 
-  async findOneByOpenId (openId) {
+  async findOneByOpenId(openId) {
     return {
-      uid: 1
-    }
+      uid: 1,
+    };
   }
 }

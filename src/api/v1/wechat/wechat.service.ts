@@ -9,8 +9,8 @@ export class WechatService {
       process.env.wxLoginUrl,
       process.env.wxAppId,
       process.env.wxAppSecret,
-      code
-    )
+      code,
+    );
     const result = await axios.get(url);
     if (result.status !== 200) {
       throw new UnauthorizedException(`openId 获取失败`);
