@@ -8,18 +8,22 @@ import { JwtModule } from '@nestjs/jwt';
 import { LocalStrategy } from './local.strategy';
 import { JwtStrategy } from './jwt.strategy';
 import { jwtConstants } from './constants';
+import { WechatModule } from '../wechat/wechat.module';
 
 @Module({
   imports: [
     UserModule,
-    PassportModule,
+    WechatModule,
+    PassportModule.register({
+      property: 'user',
+    }),
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '2h' },
     }),
   ],
   providers: [TokenService, LocalStrategy, JwtStrategy],
   controllers: [TokenController],
   exports: [TokenService],
 })
-export class TokenModule {}
+export class TokenModule { }
