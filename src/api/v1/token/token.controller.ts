@@ -35,10 +35,18 @@ export class TokenController {
     return { token };
   }
 
-  @UseGuards(AuthGuard('jwt'))
   @Post('verify')
-  async verify(@Request() req) {
-    // console.log(req)
+  async verify(@Body('token') token: string) {
+    try {
+      this.jwtService.verify(token);
+      return {
+        is_valid: true,
+      };
+    } catch (err) {
+      return {
+        is_valid: false,
+      };
+    }
   }
 
   @Post('login')
