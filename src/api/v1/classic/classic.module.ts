@@ -8,10 +8,12 @@ import { Music } from 'src/entities/music.entity';
 import { Sentence } from 'src/entities/sentence.entity';
 import { Book } from 'src/entities/book.entity';
 import { Favor } from 'src/entities/favor.entity';
+import { ArtModule } from '../art/art.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Flow, Movie, Music, Sentence, Book, Favor]),
+    ArtModule,
   ],
   controllers: [ClassicController],
   providers: [ClassicService],

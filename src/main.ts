@@ -9,7 +9,15 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('v1');
   // app.useGlobalFilters(new ExceptionsFilter());
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      validationError: {
+        target: true,
+        value: true,
+      },
+      forbidUnknownValues: true,
+    }),
+  );
   // app.useGlobalGuards(AuthGuard('jwt'));
 
   // @UseGuards(AuthGuard('local'))

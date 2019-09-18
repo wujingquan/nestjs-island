@@ -1,5 +1,6 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param, Body } from '@nestjs/common';
 import { ClassicService } from './classic.service';
+import { indexDto } from './classic.dto';
 
 @Controller('classic')
 export class ClassicController {
@@ -8,5 +9,11 @@ export class ClassicController {
   @Get('/latest')
   async latest() {
     return await this.classicService.latest(1);
+  }
+
+  @Get(':index/next')
+  async getNext(@Body() dto: indexDto) {
+    console.log(typeof dto, dto);
+    // this.classicService.getNext(index);
   }
 }

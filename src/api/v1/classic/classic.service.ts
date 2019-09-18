@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Flow } from 'src/entities/flow.entity';
@@ -7,6 +7,8 @@ import { Music } from 'src/entities/music.entity';
 import { Sentence } from 'src/entities/sentence.entity';
 import { Book } from 'src/entities/book.entity';
 import { Favor } from 'src/entities/favor.entity';
+
+import { ArtService } from '../art/art.service';
 
 @Injectable()
 export class ClassicService {
@@ -28,6 +30,8 @@ export class ClassicService {
 
     @InjectRepository(Favor)
     private readonly favorRepository: Repository<Favor>,
+
+    private readonly artService: ArtService,
   ) {}
 
   async latest(uid) {
@@ -73,5 +77,15 @@ export class ClassicService {
     });
 
     return art;
+  }
+
+  async getNext(index: number) {
+    const flow = await this.flowRepository.findOne(index + 1);
+    console.log(typeof index, index + 1);
+    if (!flow) {
+      throw new NotFoundException();
+    }
+    const { id, type } = flow;
+    const art = await this.artService.getData({ id, type });
   }
 }

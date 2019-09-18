@@ -7,6 +7,7 @@ import { LikeModule } from './api/v1/like/like.module';
 import { TokenModule } from './api/v1/token/token.module';
 import { UserModule } from './api/v1/user/user.module';
 import { WechatModule } from './api/v1/wechat/wechat.module';
+import { ArtModule } from './api/v1/art/art.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { WechatModule } from './api/v1/wechat/wechat.module';
     TokenModule,
     UserModule,
     WechatModule,
+    ArtModule,
   ],
   controllers: [AppController],
   providers: [AppService],
