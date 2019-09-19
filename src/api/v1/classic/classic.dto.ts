@@ -8,6 +8,7 @@ import {
 } from 'class-validator';
 
 export class indexDto {
+  @Type(() => Number)
   @IsNotEmpty({
     message: '空?',
   })
@@ -21,5 +22,5 @@ export class indexDto {
   // @MaxLength(10, {
   //   message: '十个'
   // })
-  readonly index: string;
+  readonly index: number;
 }

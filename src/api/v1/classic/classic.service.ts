@@ -79,13 +79,20 @@ export class ClassicService {
     return art;
   }
 
-  async getNext(index: number) {
-    const flow = await this.flowRepository.findOne(index + 1);
-    console.log(typeof index, index + 1);
+  async getClassicByIndex(index: number) {
+    const flow = await this.flowRepository.findOne({
+      where: {
+        index,
+      },
+    });
     if (!flow) {
       throw new NotFoundException();
     }
-    const { id, type } = flow;
-    const art = await this.artService.getData({ id, type });
+    const { art_id, type } = flow;
+    const art = await this.artService.getData({ art_id, type });
+    if (!art) {
+      throw new NotFoundException();
+    }
+    return art;
   }
 }

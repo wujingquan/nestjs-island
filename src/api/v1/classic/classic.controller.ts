@@ -11,9 +11,15 @@ export class ClassicController {
     return await this.classicService.latest(1);
   }
 
+  @Get(':index/previous')
+  async getPrev(@Param() dto: indexDto) {
+    let { index } = dto;
+    return await this.classicService.getClassicByIndex(--index);
+  }
+
   @Get(':index/next')
-  async getNext(@Body() dto: indexDto) {
-    console.log(typeof dto, dto);
-    // this.classicService.getNext(index);
+  async getNext(@Param() dto: indexDto) {
+    let { index } = dto;
+    return await this.classicService.getClassicByIndex(++index);
   }
 }

@@ -7,7 +7,7 @@ import { Sentence } from 'src/entities/sentence.entity';
 import { Book } from 'src/entities/book.entity';
 
 class getDto {
-  id: number;
+  art_id: number;
   type: number;
 }
 
@@ -28,16 +28,22 @@ export class ArtService {
   ) {}
 
   async getData(dto: getDto) {
-    let art;
+    let art, finder;
+    finder = {
+      where: {
+        id: dto.art_id,
+      },
+    };
+    console.log(finder);
     switch (dto.type) {
       case 100:
-        art = await this.movieRepository.findOne(dto.id);
+        art = await this.movieRepository.findOne(finder);
         break;
       case 200:
-        art = await this.musicRepository.findOne(dto.id);
+        art = await this.musicRepository.findOne(finder);
         break;
       case 300:
-        art = await this.sentenceRepository.findOne(dto.id);
+        art = await this.sentenceRepository.findOne(finder);
         break;
     }
     return art;
