@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, Not } from 'typeorm';
 import { Flow } from 'src/entities/flow.entity';
 import { Movie } from 'src/entities/movie.entity';
 import { Music } from 'src/entities/music.entity';
@@ -94,5 +94,24 @@ export class ClassicService {
       throw new NotFoundException();
     }
     return art;
+  }
+
+  async getAllFavor({ uid }) {
+    const favor = await this.favorRepository.find({
+      where: {
+        uid,
+        type: Not(400),
+      },
+    });
+    console.log(favor);
+    if (!favor.length) {
+      throw new NotFoundException();
+    }
+
+    return favor;
+  }
+
+  async getDetail({ type, id, uid }) {
+    return await this.artService.getDetail({ type, id, uid });
   }
 }

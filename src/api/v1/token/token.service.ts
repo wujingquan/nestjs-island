@@ -21,7 +21,7 @@ export class TokenService {
   constructor(
     private readonly jwtService: JwtService,
     private readonly userService: UserService,
-    private readonly wechatService: WechatService, //
+    private readonly wechatService: WechatService,
   ) {}
 
   async validateUser(username: string, pass: string): Promise<any> {
@@ -36,9 +36,12 @@ export class TokenService {
   async codeToToken(code) {
     let openId = await this.wechatService.validateByCode(code);
     let user = await this.userService.findOneByOpenId(openId);
+    if (!user) {
+      user = await this.userService.registerByOpenId(openId);
+    }
     if (user) {
       const payload = {
-        uid: user.uid,
+        uid: user.id,
         scope: 8,
       };
       return this.jwtService.sign(payload);

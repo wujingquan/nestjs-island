@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Movie } from 'src/entities/movie.entity';
 import { Music } from 'src/entities/music.entity';
 import { Sentence } from 'src/entities/sentence.entity';
 import { Book } from 'src/entities/book.entity';
+import { Favor } from 'src/entities/favor.entity';
 
 class getDto {
   art_id: number;
@@ -25,6 +26,9 @@ export class ArtService {
 
     @InjectRepository(Book)
     private readonly bookRepository: Repository<Book>,
+
+    @InjectRepository(Favor)
+    private readonly favorRepository: Repository<Favor>,
   ) {}
 
   async getData(dto: getDto) {
@@ -47,5 +51,39 @@ export class ArtService {
         break;
     }
     return art;
+  }
+
+  async getDetail(dto) {
+    const art = await this.getData({
+      art_id: dto.id,
+      type: dto.type,
+    });
+    if (!art) {
+      throw new NotFoundException();
+    }
+
+    const like = await this.favorRepository.findOne({
+      where: {
+        uid: dto.uid,
+        art_id: dto.id,
+        type: dto.type,
+      },
+    });
+
+    const like_status = like ? true : false;
+
+    return {
+      art,
+      like_status,
+    };
+  }
+
+  async getType(type) {
+    let obj = {
+      100: 'movie',
+      200: 'music',
+      300: 'sentence',
+    };
+    return obj[type];
   }
 }

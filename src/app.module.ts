@@ -8,6 +8,8 @@ import { TokenModule } from './api/v1/token/token.module';
 import { UserModule } from './api/v1/user/user.module';
 import { WechatModule } from './api/v1/wechat/wechat.module';
 import { ArtModule } from './api/v1/art/art.module';
+import { BookModule } from './api/v1/book/book.module';
+import { HotBookModule } from './api/v1/hot-book/hot-book.module';
 
 @Module({
   imports: [
@@ -18,6 +20,8 @@ import { ArtModule } from './api/v1/art/art.module';
     UserModule,
     WechatModule,
     ArtModule,
+    BookModule,
+    HotBookModule,
   ],
   controllers: [AppController],
   providers: [AppService],

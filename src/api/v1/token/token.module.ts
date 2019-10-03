@@ -14,9 +14,7 @@ import { WechatModule } from '../wechat/wechat.module';
   imports: [
     UserModule,
     WechatModule,
-    PassportModule.register({
-      property: 'user',
-    }),
+    PassportModule,
     JwtModule.register({
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '2h' },

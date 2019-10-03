@@ -1,10 +1,15 @@
-import { Controller, Get, Param, Body } from '@nestjs/common';
+import { Controller, Get, Param, Body, UseGuards, Req } from '@nestjs/common';
 import { ClassicService } from './classic.service';
-import { indexDto } from './classic.dto';
+import { ArtService } from '../art/art.service';
+import { indexDto, favorDto, detailDto } from './classic.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('classic')
 export class ClassicController {
-  constructor(private readonly classicService: ClassicService) {}
+  constructor(
+    private readonly classicService: ClassicService,
+    private readonly artService: ArtService,
+  ) {}
 
   @Get('/latest')
   async latest() {
@@ -21,5 +26,32 @@ export class ClassicController {
   async getNext(@Param() dto: indexDto) {
     let { index } = dto;
     return await this.classicService.getClassicByIndex(++index);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get(':type/:id/favor')
+  async getFavor(@Param() dto: favorDto, @Req() req) {
+    const uid = req.user.uid;
+    return await this.artService.getDetail({
+      uid,
+      ...dto,
+    });
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('favor')
+  async getAllFavor(@Req() req) {
+    const uid = req.user.uid;
+    return await this.classicService.getAllFavor({ uid });
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get(':type/:id')
+  async getDetail(@Param() dto: detailDto, @Req() req) {
+    const uid = req.user.uid;
+    return await this.classicService.getDetail({
+      uid,
+      ...dto,
+    });
   }
 }
