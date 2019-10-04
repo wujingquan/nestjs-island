@@ -10,6 +10,7 @@ import { WechatModule } from './api/v1/wechat/wechat.module';
 import { ArtModule } from './api/v1/art/art.module';
 import { BookModule } from './api/v1/book/book.module';
 import { HotBookModule } from './api/v1/hot-book/hot-book.module';
+import { CommentModule } from './api/v1/comment/comment.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { HotBookModule } from './api/v1/hot-book/hot-book.module';
     ArtModule,
     BookModule,
     HotBookModule,
+    CommentModule,
   ],
   controllers: [AppController],
   providers: [AppService],
