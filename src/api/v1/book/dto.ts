@@ -1,4 +1,5 @@
-import { Type } from 'class-transformer';
+import { TypeToNumber } from '../../../common/helpers';
+import { Type, Transform } from 'class-transformer';
 import {
   Max,
   Min,
@@ -6,6 +7,8 @@ import {
   IsNotEmpty,
   MinLength,
   MaxLength,
+  IsInt,
+  IsPositive,
 } from 'class-validator';
 
 export class searchDto {
@@ -28,8 +31,11 @@ export class searchDto {
 }
 
 export class bookFavorDto {
-  @Type(() => Number)
+  // @Type(() => Number)
+  @Transform(TypeToNumber)
   @IsNotEmpty()
+  @IsInt()
+  @IsPositive()
   readonly book_id: number;
 }
 

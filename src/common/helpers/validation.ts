@@ -1,0 +1,1 @@
+export const TypeToNumber = value => isNaN(parseInt(value, 10)) ? value : parseInt(value, 10);

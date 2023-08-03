@@ -21,18 +21,28 @@ export class HotBookService {
       },
     });
 
-    const ids = [];
+    const ids = [1, 2];
     books.forEach(book => {
       ids.push(book.id);
     });
 
     console.log(ids);
-    const favors = await this.favorRepository.find({
-      where: {
+    // const favors = await this.favorRepository.find({
+    //   where: {
+    //     art_id: In(ids),
+    //     type: 100,
+    //   },
+    // });
+
+    const favors = await this.favorRepository
+      .createQueryBuilder()
+      .where({
         art_id: In(ids),
-        type: 400,
-      },
-    });
+        type: 100,
+      })
+      .groupBy('art_id')
+      .getMany();
+    console.log(favors);
 
     return favors;
   }
